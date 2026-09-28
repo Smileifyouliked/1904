@@ -27,7 +27,8 @@ Polymarket paid out. 177 days had a resolved event. 2026-05-17 and 05-18 had no 
    question 5 in `docs/phase0_verification.md`. The bot now uses all reports.
 2. **The official climate-report high is the wrong number for this market.** CLI and IEM's
    daily max run 1-2 °F above the reports (they include readings between reports). They missed
-   the paid bucket on about 1 day in 3. Do not use them, or NOAA GHCN `TMAX`, as training labels.
+   the paid bucket on about 1 day in 3. Do not use them as training labels. NOAA GHCN `TMAX`
+   is probably the same kind of number (ASSUMED: NCEI is blocked here, so it was not tested).
 3. **The NWS API feed has gaps.** For the 6 days it still holds (09-22 to 09-27), it had only
    16 to 22 of the 24 routine hourly reports. The METAR text was missing on the other rows.
    It matched on all 6 days by luck, not by design.
