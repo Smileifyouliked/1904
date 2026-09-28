@@ -1,0 +1,11 @@
+[
+  {"url": "https://open-meteo.com/en/docs", "file": "forecast-api.md", "mode": "html"},
+  {"url": "https://open-meteo.com/en/docs/ensemble-api", "file": "ensemble-api.md", "mode": "html"},
+  {"url": "https://open-meteo.com/en/docs/historical-forecast-api", "file": "historical-forecast-api.md", "mode": "html"},
+  {"url": "https://open-meteo.com/en/docs/previous-runs-api", "file": "previous-runs-api.md", "mode": "html"},
+  {"url": "https://open-meteo.com/en/docs/historical-weather-api", "file": "historical-weather-api.md", "mode": "html"},
+  {"url": "https://open-meteo.com/en/docs/model-updates", "file": "model-updates.md", "mode": "html"},
+  {"url": "https://open-meteo.com/en/terms", "file": "terms.md", "mode": "html"},
+  {"url": "https://open-meteo.com/en/licence", "file": "licence.md", "mode": "html"},
+  {"url": "https://open-meteo.com/en/pricing", "file": "pricing.md", "mode": "html"}
+]
