@@ -1,0 +1,8 @@
+# Runtime dependencies for the bot. Pinned; update deliberately.
+requests==2.34.2
+certifi==2026.7.22
+charset-normalizer==3.5.1
+idna==3.20
+urllib3==2.8.0
+# IANA time zone data, so America/New_York works even without system tzdata.
+tzdata==2026.4

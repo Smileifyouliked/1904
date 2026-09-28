@@ -21,6 +21,14 @@ new file instead if an API changes.
 | `open_meteo/ensemble_ecmwf_ifs025_KLGA.json` | `GET https://ensemble-api.open-meteo.com/v1/ensemble?latitude=40.7792&longitude=-73.8800&hourly=temperature_2m&models=ecmwf_ifs025&temperature_unit=fahrenheit&timezone=America%2FNew_York&forecast_days=2` |
 | `ecmwf/enfo_20260928_00z_24h.index` | `GET https://data.ecmwf.int/forecasts/20260928/00z/ifs/0p25/enfo/20260928000000-24h-enfo-ef.index` (fetched about 12:05 UTC) |
 | `open_meteo/forecast_nbm_KLGA.json` | `GET https://api.open-meteo.com/v1/forecast?latitude=40.7792&longitude=-73.8800&daily=temperature_2m_max&hourly=temperature_2m&models=ncep_nbm_conus&temperature_unit=fahrenheit&timezone=America%2FNew_York&forecast_days=2` |
+| `open_meteo/ensemble_ecmwf_ifs025_KLGA_gmt.json` | same as the ensemble request above but `timezone=GMT&forecast_days=3` (fetched about 12:10 UTC). The bot's parser accepts only GMT responses. |
+| `open_meteo/forecast_nbm_KLGA_gmt.json` | `GET https://api.open-meteo.com/v1/forecast?latitude=40.7792&longitude=-73.8800&hourly=temperature_2m&models=ncep_nbm_conus&temperature_unit=fahrenheit&timezone=GMT&forecast_days=3` (about 12:10 UTC) |
+| `open_meteo/meta_ecmwf_ifs025_ensemble.json` | `GET https://ensemble-api.open-meteo.com/data/ecmwf_ifs025_ensemble/static/meta.json` (about 12:10 UTC) |
+| `open_meteo/meta_ncep_nbm_conus.json` | `GET https://api.open-meteo.com/data/ncep_nbm_conus/static/meta.json` (about 12:10 UTC) |
+
+Note found in Phase 1: in `nws/observations_KLGA_2026-09-27.json`, 6 of the 24 hourly
+rows (06:51, 07:51, 11:51, 19:51, 20:51 and 00:51 UTC) have no `rawMessage`. The NWS feed
+alone therefore gives an incomplete day; the IEM file has all 24.
 
 NWS requests used the header `User-Agent: weatherbot-dev (github.com/Smileifyouliked/1904)`.
 None of these responses contain keys, wallet addresses or personal data.
