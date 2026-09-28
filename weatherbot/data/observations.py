@@ -2,8 +2,12 @@
 
 How the market resolves (VERIFIED, docs/phase0_verification.md facts 1-10):
 the highest "Temp" on the NOAA timeseries page with "Show Hourly Data" on, for the
-local (New York) day. The page shows Math.round(temp_F), and its Hourly view keeps
-reports whose minute is 51-59.
+local (New York) day. The page shows Math.round(temp_F).
+
+Which reports count (VERIFIED empirically, docs/obs_source_comparison.md): the max over
+ALL METAR and SPECI reports of the local day matched Polymarket's paid bucket on 177 of
+177 resolved days (2026-04-01..2026-09-27). Using only the minute-51-59 reports missed 4
+days, e.g. 2026-09-20, when a 21:04 EDT SPECI (72 °F) set the high and 72-73 °F won.
 
 Sources:
 - NWS API /stations/KLGA/observations: mixes 5-minute rows (whole °C, no rawMessage)
@@ -89,28 +93,35 @@ def t_group_celsius(raw_metar: str) -> Decimal | None:
 
 
 def is_hourly_report(obs: Observation, tz_name: str) -> bool:
-    """Would the NOAA 'Hourly Data' view show this row? Minutes 51-59, reports only.
+    """Is this the routine hourly report (minute 51-59)? Used to measure completeness.
 
-    ASSUMED: a SPECI at another minute is not shown (open question 5 in
-    docs/phase0_verification.md). The minute is the same in UTC and in New York.
+    The minute is the same in UTC and in New York.
     """
     minute = obs.time_utc.astimezone(ZoneInfo(tz_name)).minute
     return obs.is_report and HOURLY_MINUTE_MIN <= minute <= HOURLY_MINUTE_MAX
 
 
 def daily_high(observations: Iterable[Observation], day: date, tz_name: str) -> DailyHigh:
-    """Resolution-style high for the local day. Raises StaleDataError if no hourly reports."""
+    """Resolution-style high for the local day: max over all METAR/SPECI reports.
+
+    `hourly_reports` counts clock hours that have a minute-51-59 report, so callers can
+    tell a complete day from one with gaps. Raises StaleDataError if there are no reports.
+    """
     start, end = local_day_bounds_utc(day, tz_name)
-    hourly = [
+    reports = [
         o
         for o in observations
-        if start <= o.time_utc < end and o.temp_f is not None and is_hourly_report(o, tz_name)
+        if start <= o.time_utc < end and o.temp_f is not None and o.is_report
     ]
-    if not hourly:
-        raise StaleDataError(f"no hourly reports with a temperature for {day}")
-    # One report per clock hour; a SPECI inside 51-59 can share the hour with the METAR.
-    hours = {o.time_utc.replace(minute=0, second=0, microsecond=0) for o in hourly}
-    top = max(hourly, key=lambda o: (o.temp_f, o.time_utc))
+    if not reports:
+        raise StaleDataError(f"no METAR/SPECI reports with a temperature for {day}")
+    # One routine report per clock hour; a SPECI inside 51-59 can share the hour.
+    hours = {
+        o.time_utc.replace(minute=0, second=0, microsecond=0)
+        for o in reports
+        if is_hourly_report(o, tz_name)
+    }
+    top = max(reports, key=lambda o: (o.temp_f, o.time_utc))
     top_temp = top.temp_f
     if top_temp is None:  # Unreachable: filtered above. Explicit so -O cannot remove it.
         raise StaleDataError(f"no temperature in the top report for {day}")
@@ -235,8 +246,12 @@ def parse_iem_asos_csv(text: str, tz_name: str) -> list[Observation]:
 
 
 def fetch_iem_observations(client: HttpClient, iem_station: str, day: date) -> list[Observation]:
-    """Fetch one UTC-dated range covering the local day; times requested in UTC."""
-    first, last = day - timedelta(days=1), day + timedelta(days=1)
+    """Fetch one UTC-dated range covering the local day; times requested in UTC.
+
+    The end date is EXCLUSIVE (VERIFIED by live call: day2=21 stopped at 2026-09-20 23:51Z),
+    and the New York day runs to 04:00 or 05:00 UTC of the next date, so end at day + 2.
+    """
+    first, last = day - timedelta(days=1), day + timedelta(days=2)
     text = client.get_text(
         IEM_ASOS_URL,
         params=[

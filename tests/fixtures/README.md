@@ -25,6 +25,9 @@ new file instead if an API changes.
 | `open_meteo/forecast_nbm_KLGA_gmt.json` | `GET https://api.open-meteo.com/v1/forecast?latitude=40.7792&longitude=-73.8800&hourly=temperature_2m&models=ncep_nbm_conus&temperature_unit=fahrenheit&timezone=GMT&forecast_days=3` (about 12:10 UTC) |
 | `open_meteo/meta_ecmwf_ifs025_ensemble.json` | `GET https://ensemble-api.open-meteo.com/data/ecmwf_ifs025_ensemble/static/meta.json` (about 12:10 UTC) |
 | `open_meteo/meta_ncep_nbm_conus.json` | `GET https://api.open-meteo.com/data/ncep_nbm_conus/static/meta.json` (about 12:10 UTC) |
+| `iem/asos_LGA_2026-09-20_utc.csv` | IEM `asos.py` as above but `year1=2026&month1=9&day1=19&year2=2026&month2=9&day2=22&tz=Etc/UTC` (about 12:40 UTC). Holds the 21:04 EDT SPECI that set the 2026-09-20 high. |
+| `iem/cli_LGA_2026-09-27.txt` | `GET https://mesonet.agron.iastate.edu/cgi-bin/afos/retrieve.py?pil=CLILGA&limit=1&fmt=text&sdate=2026-09-28&edate=2026-09-29` (NWS climate report, MAXIMUM 65 for Sep 27) |
+| `polymarket/gamma_event_nyc_2026-09-20_resolved.json` | Gamma event slug `...-september-20-2026` (resolved: `72-73°F` won) |
 
 Note found in Phase 1: in `nws/observations_KLGA_2026-09-27.json`, 6 of the 24 hourly
 rows (06:51, 07:51, 11:51, 19:51, 20:51 and 00:51 UTC) have no `rawMessage`. The NWS feed

@@ -7,10 +7,12 @@ import pytest
 
 from tests.conftest import load_json, load_text
 from weatherbot.data.errors import ParseError, StaleDataError
+from weatherbot.data.markets import parse_event
 from weatherbot.data.observations import (
     Observation,
     check_coverage,
     daily_high,
+    fetch_iem_observations,
     is_hourly_report,
     parse_iem_asos_csv,
     parse_nws_observations,
@@ -88,15 +90,48 @@ def test_daily_high_rounds_half_up() -> None:
     assert high.high_f == 65
 
 
-def test_daily_high_ignores_non_hourly_rows_and_other_days() -> None:
+def test_daily_high_counts_speci_but_not_5_minute_rows_or_other_days() -> None:
     rows = [
         obs(16, 51, "60"),
-        obs(16, 40, "80"),  # SPECI outside minute 51-59: not on the Hourly view (ASSUMED).
-        obs(17, 0, "81", metar=None),  # 5-minute row.
+        obs(16, 40, "70"),  # SPECI outside minute 51-59: counts (see 2026-09-20 test).
+        obs(17, 0, "81", metar=None),  # NWS 5-minute row: never counts.
         obs(3, 51, "82"),  # 23:51 EDT on Sep 26: previous local day.
     ]
     high = daily_high(rows, DAY, NY)
-    assert high.high_f == 60
+    assert high.high_f == 70
+    assert high.hourly_reports == 1  # Only the 16:51 report is a routine hourly one.
+
+
+def test_speci_set_the_high_on_2026_09_20() -> None:
+    """Regression: a 21:04 EDT SPECI (T0222 = 71.96 °F -> 72) set the high and Polymarket
+    paid 72-73 °F. The minute-51-59 reports alone peak at 71 (wrong bucket)."""
+    iem = parse_iem_asos_csv(load_text("iem/asos_LGA_2026-09-20_utc.csv"), "Etc/UTC")
+    high = daily_high(iem, date(2026, 9, 20), NY)
+    assert high.high_f == 72
+    assert high.observed_at_utc == datetime(2026, 9, 21, 1, 4, tzinfo=UTC)
+    assert high.complete
+    event = parse_event(
+        load_json("polymarket/gamma_event_nyc_2026-09-20_resolved.json"), date(2026, 9, 20)
+    )
+    winner = event.winning_bucket()
+    assert winner is not None
+    assert winner.contains(high.high_f)
+    hourly_only = [o for o in iem if is_hourly_report(o, NY)]
+    assert not winner.contains(daily_high(hourly_only, date(2026, 9, 20), NY).high_f)
+
+
+def test_iem_fetch_requests_through_next_local_midnight(settings) -> None:
+    """IEM's end date is exclusive; the New York day ends at 04:00 UTC the next date."""
+    seen = {}
+
+    class Client:
+        def get_text(self, url, params=None, headers=None):
+            seen.update(dict(params))
+            return "station,valid,tmpf,metar\n"
+
+    fetch_iem_observations(Client(), "LGA", date(2026, 9, 20))  # type: ignore[arg-type]
+    assert (seen["year2"], seen["month2"], seen["day2"]) == (2026, 9, 22)
+    assert (seen["year1"], seen["month1"], seen["day1"]) == (2026, 9, 19)
 
 
 def test_daily_high_fails_closed_without_reports() -> None:

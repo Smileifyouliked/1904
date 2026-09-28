@@ -9,7 +9,7 @@ line-length = 100
 target-version = "py311"
 # Lint and format only the bot and its tests. docs/ and .claude/ hold saved doc pages
 # and tooling scripts that must stay byte-for-byte as fetched.
-include = ["weatherbot/**/*.py", "tests/**/*.py"]
+include = ["weatherbot/**/*.py", "tests/**/*.py", "scripts/**/*.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "N", "SIM", "RUF", "DTZ", "ANN"]
