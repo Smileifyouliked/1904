@@ -48,7 +48,7 @@ All VERIFIED from fixtures in `tests/fixtures/polymarket/`.
 ## Open questions
 
 1. **Open-Meteo licence: decided 2026-09-28, use the free tier.** The terms bar commercial use, so this likely breaks them once the bot trades for profit, and access can be cut off. The bot must fail closed without Open-Meteo. Revisit before live trading.
-2. **Blocked hosts.** `data.ecmwf.int`, `api.meltema.com` and `api.oikolab.com` are refused by this sandbox's network settings. I need `data.ecmwf.int` added before I can save an ECMWF fixture.
+2. **Blocked hosts.** `data.ecmwf.int` is now allowed and works (fixture saved). `api.meltema.com` and `api.oikolab.com` are still blocked, and both stay out anyway. Where the ECMWF control member (`type: cf`) is published is not yet confirmed.
 3. **IEM: approved 2026-09-28 as a cross-check source.**
 4. **Which day, exactly.** The rules say "on this day" and the page uses local station time. I assume a midnight-to-midnight ET day (EDT in summer, EST in winter), but the rules text does not say so outright. ASSUMED.
 5. **SPECI reports at other minutes.** The help text says Hourly Data "includes any SPECI observations", but its filter is minutes 51-59. If a SPECI at 14:19 is the day's peak, does it count? I can't test this without the Synoptic API.

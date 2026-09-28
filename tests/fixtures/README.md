@@ -19,6 +19,7 @@ new file instead if an API changes.
 | `iem/asos_LGA_2026-09-27_local.csv` | `GET https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=LGA&data=tmpf&data=metar&year1=2026&month1=9&day1=27&year2=2026&month2=9&day2=28&tz=America/New_York&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&report_type=4` |
 | `aviationweather/metar_KLGA_recent.json` | `GET https://aviationweather.gov/api/data/metar?ids=KLGA&format=json&hours=3` |
 | `open_meteo/ensemble_ecmwf_ifs025_KLGA.json` | `GET https://ensemble-api.open-meteo.com/v1/ensemble?latitude=40.7792&longitude=-73.8800&hourly=temperature_2m&models=ecmwf_ifs025&temperature_unit=fahrenheit&timezone=America%2FNew_York&forecast_days=2` |
+| `ecmwf/enfo_20260928_00z_24h.index` | `GET https://data.ecmwf.int/forecasts/20260928/00z/ifs/0p25/enfo/20260928000000-24h-enfo-ef.index` (fetched about 12:05 UTC) |
 | `open_meteo/forecast_nbm_KLGA.json` | `GET https://api.open-meteo.com/v1/forecast?latitude=40.7792&longitude=-73.8800&daily=temperature_2m_max&hourly=temperature_2m&models=ncep_nbm_conus&temperature_unit=fahrenheit&timezone=America%2FNew_York&forecast_days=2` |
 
 NWS requests used the header `User-Agent: weatherbot-dev (github.com/Smileifyouliked/1904)`.

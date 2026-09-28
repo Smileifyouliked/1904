@@ -16,7 +16,7 @@ a fixture. **UNCLEAR** means I could not find or read the terms.
 | Ground-truth observations | NWS API `api.weather.gov` | Yes, "free to use for any purpose" | Use as primary |
 | Ground-truth observations, cross-check | AviationWeather Data API | Unclear (US gov; no licence text found) | Backup |
 | Ground-truth observations, cross-check | Iowa Environmental Mesonet (IEM) ASOS | Unclear | Cross-check source; approved by the owner 2026-09-28 |
-| Ensemble forecasts | ECMWF Open Data | Yes, CC-BY-4.0 with attribution | Preferred, but blocked in this sandbox |
+| Ensemble forecasts | ECMWF Open Data | Yes, CC-BY-4.0 with attribution | Reachable; backup for Open-Meteo |
 | Ensemble forecasts | Open-Meteo Ensemble API | **No** on the free tier | Free tier, by owner decision 2026-09-28 (see licence risk) |
 | NBM (deterministic) | Open-Meteo `ncep_nbm_conus` | **No** on the free tier | Free tier, by owner decision 2026-09-28 (see licence risk) |
 | Official NWS forecast | NWS API gridpoint forecast | Yes | Use |
@@ -87,8 +87,10 @@ a fixture. **UNCLEAR** means I could not find or read the terms.
 ## ECMWF Open Data
 
 - Licence: CC-BY-4.0, commercial use allowed with attribution (VERIFIED, https://www.ecmwf.int/en/forecasts/datasets/open-data and the ECMWF news post of 2025, via Firecrawl search excerpts).
-- Base URL: `https://data.ecmwf.int/forecasts/` (from the attribution text above). **This host is blocked in this sandbox** (proxy refused CONNECT), so no fixture yet.
-- Formats: GRIB2 files, not a point API. Needs `ecCodes`/`cfgrib`, and grids must be handled carefully on a 2 GB server. Not checked yet.
+- Base URL: `https://data.ecmwf.int/forecasts/` (VERIFIED, reachable after the owner allowlisted it on 2026-09-28). No login.
+- Layout (VERIFIED, directory listing): `/forecasts/<YYYYMMDD>/<HH>z/ifs/0p25/enfo/<YYYYMMDDHH0000>-<step>h-enfo-ef.grib2`, each with a matching `.index` file. `aifs-ens/` also exists.
+- Format (VERIFIED, fixture `tests/fixtures/ecmwf/enfo_20260928_00z_24h.index`): the `.index` file has one JSON object per line with `param`, `number`, `type`, `step`, `_offset` and `_length`. The step-24 index lists `2t` (2 m temperature) for 50 perturbed members (`type: pf`), about 650 KB each, 32.9 MB for all 50. The control member (`type: cf`) is **not** in this file (open question).
+- Size trap (VERIFIED, HTTP HEAD): one step's `.grib2` file is 6.6 GB and the server accepts byte ranges. The bot must download only the `2t` messages by byte range, never whole files, on a 2 GB-RAM server. Reading GRIB needs `ecCodes`/`cfgrib` (not installed or checked yet).
 
 ## Open-Meteo (Ensemble, Forecast with NBM, Historical Forecast, Previous Runs)
 
