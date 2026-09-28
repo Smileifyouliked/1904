@@ -15,13 +15,13 @@ a fixture. **UNCLEAR** means I could not find or read the terms.
 | Resolution truth (what the market settles on) | NOAA timeseries page, KLGA, Hourly Data | Public page | Not callable directly (see below) |
 | Ground-truth observations | NWS API `api.weather.gov` | Yes, "free to use for any purpose" | Use as primary |
 | Ground-truth observations, cross-check | AviationWeather Data API | Unclear (US gov; no licence text found) | Backup |
-| Ground-truth observations, cross-check | Iowa Environmental Mesonet (IEM) ASOS | Unclear | Cross-check only; not on the shortlist, needs your OK |
+| Ground-truth observations, cross-check | Iowa Environmental Mesonet (IEM) ASOS | Unclear | Cross-check source; approved by the owner 2026-09-28 |
 | Ensemble forecasts | ECMWF Open Data | Yes, CC-BY-4.0 with attribution | Preferred, but blocked in this sandbox |
-| Ensemble forecasts | Open-Meteo Ensemble API | **No** on the free tier | Blocked until you decide |
-| NBM (deterministic) | Open-Meteo `ncep_nbm_conus` | **No** on the free tier | Blocked until you decide |
+| Ensemble forecasts | Open-Meteo Ensemble API | **No** on the free tier | Free tier, by owner decision 2026-09-28 (see licence risk) |
+| NBM (deterministic) | Open-Meteo `ncep_nbm_conus` | **No** on the free tier | Free tier, by owner decision 2026-09-28 (see licence risk) |
 | Official NWS forecast | NWS API gridpoint forecast | Yes | Use |
 | Ensemble forecasts | Meltema | UNCLEAR (docs unreadable) | Do not use |
-| Historical training data | Open-Meteo Historical Forecast / Previous Runs | **No** on the free tier | Blocked until you decide |
+| Historical training data | Open-Meteo Historical Forecast / Previous Runs | **No** on the free tier | Free tier, by owner decision 2026-09-28 (see licence risk) |
 | Historical training data | Oikolab | UNCLEAR (no terms found) | Do not use |
 
 ## Polymarket Gamma API (market metadata and prices)
@@ -82,7 +82,7 @@ a fixture. **UNCLEAR** means I could not find or read the terms.
 
 - URL: `https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py` (VERIFIED, live call returned CSV with `tmpf` and raw METAR).
 - Auth: none. Rate limits and licence: not checked (UNCLEAR).
-- It is **not on the approved shortlist**. I used it only for the cross-check below. Using it in the bot needs your approval.
+- Not on the original shortlist. The owner approved it as a cross-check source on 2026-09-28.
 
 ## ECMWF Open Data
 
@@ -95,7 +95,8 @@ a fixture. **UNCLEAR** means I could not find or read the terms.
 - Base URLs: `https://ensemble-api.open-meteo.com/v1/ensemble`, `https://api.open-meteo.com/v1/forecast` (VERIFIED, live calls).
 - Auth: none on the free tier; `apikey` plus a `customer-` server prefix on paid plans (VERIFIED, `.claude/skills/open-meteo-docs/references/verbatim/ensemble-api.md`).
 - Rate limits (free): under 10,000 calls a day, 5,000 an hour, 600 a minute (VERIFIED, `.../verbatim/terms.md`).
-- **Licence: free tier is non-commercial only.** "Integrating our service into commercial products" is listed as commercial (VERIFIED, `.../verbatim/terms.md`). A trading bot run for profit is very likely commercial. **Do not depend on it until you decide** (buy a plan, self-host, or drop it).
+- **Licence: free tier is non-commercial only.** "Integrating our service into commercial products" is listed as commercial (VERIFIED, `.../verbatim/terms.md`). A trading bot run for profit is very likely commercial.
+- **Owner decision (2026-09-28): use the free tier.** Licence risk, stated plainly: using the free tier for a bot that trades for profit likely breaks Open-Meteo's terms. Open-Meteo can block the bot's IP address or cut off access with no warning, which could stop forecasts in the middle of a trading day. The bot must fail closed when Open-Meteo is unavailable. Before live trading, revisit this decision (paid plan, self-hosting, or ECMWF Open Data directly).
 - Models (VERIFIED by live call): `models=ecmwf_ifs025` returns `temperature_2m` plus `_member01` to `_member50` (51 series). `models=ncep_nbm_conus` works on `/v1/forecast`. A bad model name returns `{"error": true, ...}`.
 - Grid trap (VERIFIED, fixture): for KLGA (40.7792, -73.8800) the ECMWF 0.25° ensemble answered for the cell at 40.75, -74.0, about 10 km away.
 - Update times: ECMWF IFS 0.25° ensemble, 51 members, 15 days, every 6 hours (VERIFIED, ensemble docs table). NBM history in the Historical Forecast API starts 2024-10-08 (VERIFIED, `.../verbatim/historical-forecast-api.md`).
