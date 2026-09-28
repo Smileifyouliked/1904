@@ -1,0 +1,23 @@
+[project]
+name = "weatherbot"
+version = "0.1.0"
+description = "Forecasting and paper-trading bot for Polymarket NYC (KLGA) daily high temperature markets"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# Lint and format only the bot and its tests. docs/ and .claude/ hold saved doc pages
+# and tooling scripts that must stay byte-for-byte as fetched.
+include = ["weatherbot/**/*.py", "tests/**/*.py", "scripts/**/*.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "SIM", "RUF", "DTZ", "ANN"]
+ignore = ["ANN401"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

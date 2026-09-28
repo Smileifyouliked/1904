@@ -1,0 +1,103 @@
+
+783 
+CDUS41 KOKX 280622
+CLILGA
+
+CLIMATE REPORT 
+NATIONAL WEATHER SERVICE NEW YORK, NY
+222 AM EDT MON SEP 28 2026
+
+...................................
+
+...THE LAGUARDIA NY CLIMATE SUMMARY FOR SEPTEMBER 27 2026...
+
+CLIMATE NORMAL PERIOD 1991 TO 2020
+CLIMATE RECORD PERIOD 1939 TO 2026
+
+
+WEATHER ITEM   OBSERVED TIME   RECORD YEAR NORMAL DEPARTURE LAST      
+                VALUE   (LST)  VALUE       VALUE  FROM      YEAR     
+                                                  NORMAL           
+...................................................................
+TEMPERATURE (F)                                                          
+ YESTERDAY                                                           
+  MAXIMUM         65    111 PM  90    1998  73     -8       79       
+  MINIMUM         59    320 AM  43    1947  60     -1       68       
+  AVERAGE         62                        67     -5       74     
+
+PRECIPITATION (IN)                                                    
+  YESTERDAY        1.24          2.72 1985   0.13   1.11     0.02     
+  MONTH TO DATE    4.11                      3.47   0.64     2.46     
+  SINCE SEP 1      4.11                      3.47   0.64     2.46     
+  SINCE JAN 1     33.08                     33.83  -0.75    25.95     
+
+SNOWFALL (IN)                                                              
+  YESTERDAY        0.0          MM      MM   0.0    0.0      0.0      
+  MONTH TO DATE    0.0                       0.0    0.0      0.0      
+  SINCE SEP 1      0.0                       0.0    0.0      0.0      
+  SINCE JUL 1      0.0                       0.0    0.0      0.0      
+  SNOW DEPTH       0                                                 
+
+DEGREE DAYS                                                           
+ HEATING                                                              
+  YESTERDAY        3                         2      1        0        
+  MONTH TO DATE   15                        13      2        0        
+  SINCE SEP 1     15                        13      2        0        
+  SINCE JUL 1     15                        13      2        0        
+
+ COOLING                                                              
+  YESTERDAY        0                         4     -4        9        
+  MONTH TO DATE  184                       186     -2      172        
+  SINCE SEP 1    184                       186     -2      172        
+  SINCE JAN 1   1483                      1366    117     1336        
+...................................................................
+
+
+WIND (MPH)                                                            
+  HIGHEST WIND SPEED    36   HIGHEST WIND DIRECTION    NE (40)        
+  HIGHEST GUST SPEED    48   HIGHEST GUST DIRECTION    NE (40)        
+  AVERAGE WIND SPEED    20.8                                        
+
+
+SKY COVER                                                             
+  AVERAGE SKY COVER 1.0                                                 
+
+
+WEATHER CONDITIONS                                                    
+THE FOLLOWING WEATHER WAS RECORDED YESTERDAY.                         
+  HEAVY RAIN                                                          
+  RAIN                                                                
+  LIGHT RAIN                                                          
+  FOG                                                                 
+
+
+RELATIVE HUMIDITY (PERCENT)
+ HIGHEST    97          1100 AM                                      
+ LOWEST     86           100 AM                                      
+ AVERAGE    92                                                        
+
+..........................................................
+
+
+THE LAGUARDIA NY CLIMATE NORMALS FOR TODAY
+                         NORMAL    RECORD    YEAR                     
+ MAXIMUM TEMPERATURE (F)   73        85      2025                      
+ MINIMUM TEMPERATURE (F)   60        42      1947                      
+
+
+SUNRISE AND SUNSET                                                    
+SEPTEMBER 28 2026.....SUNRISE   649 AM EDT   SUNSET   643 PM EDT     
+SEPTEMBER 29 2026.....SUNRISE   650 AM EDT   SUNSET   641 PM EDT     
+
+
+-  INDICATES NEGATIVE NUMBERS.
+R  INDICATES RECORD WAS SET OR TIED.
+MM INDICATES DATA IS MISSING.
+T  INDICATES TRACE AMOUNT.
+
+
+
+
+$$
+
+

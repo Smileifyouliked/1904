@@ -84,6 +84,8 @@ a fixture. **UNCLEAR** means I could not find or read the terms.
 - Auth: none. Rate limits and licence: not checked (UNCLEAR).
 - Not on the original shortlist. The owner approved it as a cross-check source on 2026-09-28.
 
+Phase 1 findings (2026-09-28): `asos.py`'s end date is exclusive. The max over all METAR+SPECI rows matched Polymarket's paid bucket on 177/177 days. See `docs/obs_source_comparison.md`.
+
 ## ECMWF Open Data
 
 - Licence: CC-BY-4.0, commercial use allowed with attribution (VERIFIED, https://www.ecmwf.int/en/forecasts/datasets/open-data and the ECMWF news post of 2025, via Firecrawl search excerpts).
