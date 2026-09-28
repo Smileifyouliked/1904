@@ -1,0 +1,24 @@
+{
+  "name": "open-meteo-docs",
+  "description": "Official Open-Meteo docs: forecast, ensemble, historical-forecast and previous-runs APIs, plus terms, licence and pricing. Use when writing or checking code that calls Open-Meteo, or deciding if its licence allows our use.",
+  "sources": [
+    {
+      "type": "documentation",
+      "base_url": "https://open-meteo.com/en/",
+      "start_urls": [
+        "https://open-meteo.com/en/docs",
+        "https://open-meteo.com/en/docs/ensemble-api",
+        "https://open-meteo.com/en/docs/historical-forecast-api",
+        "https://open-meteo.com/en/docs/previous-runs-api",
+        "https://open-meteo.com/en/docs/historical-weather-api",
+        "https://open-meteo.com/en/terms",
+        "https://open-meteo.com/en/licence",
+        "https://open-meteo.com/en/pricing"
+      ],
+      "skip_llms_txt": true,
+      "url_patterns": {"include": ["/en/docs/ensemble-api", "/en/docs/historical-forecast-api", "/en/docs/previous-runs-api", "/en/docs/historical-weather-api", "/en/terms", "/en/licence", "/en/pricing", "/en/docs"], "exclude": ["#"]},
+      "rate_limit": 0.5,
+      "max_pages": 8
+    }
+  ]
+}

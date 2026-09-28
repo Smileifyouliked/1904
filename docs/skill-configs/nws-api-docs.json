@@ -1,0 +1,15 @@
+{
+  "name": "nws-api-docs",
+  "description": "Official NWS API (api.weather.gov) docs: User-Agent rule, rate limits, points/gridpoints, stations and observations endpoints. Use when writing or checking code that calls api.weather.gov.",
+  "sources": [
+    {
+      "type": "documentation",
+      "base_url": "https://www.weather.gov/documentation/services-web-api",
+      "start_urls": ["https://www.weather.gov/documentation/services-web-api"],
+      "skip_llms_txt": true,
+      "url_patterns": {"include": ["/documentation/services-web-api"], "exclude": []},
+      "rate_limit": 0.5,
+      "max_pages": 5
+    }
+  ]
+}

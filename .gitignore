@@ -1,1 +1,4 @@
 .venv-tools/
+
+# Doc skill build scratch output
+build/
